@@ -1,0 +1,51 @@
+﻿@using System.Web.Mvc.Html
+@using SportSecond.BootstrapSupport
+@model SportSecond.Models.Sportsman
+@{
+    ViewBag.Title = "Спортсмен";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+<div class="media sportsman detail">
+    <a class="pull-left" href="#">
+        <img class="media-object" src="@Model.Image" data-src="holder.js/64x64">
+    </a>
+    <div class="media-body">
+        <div class="media-heading ev-title">@Model.Title <span class="age">возраст @(DateTime.Now.Year - Model.Birthday.Year)</span></div>
+        <div class="ev-help-info"><span>@Model.Sport.Title</span>, <span>@(Model.Gender ? "муж." : "жен.")</span>, <span>@Model.Nationality.Title</span>, <span>@(Model.MedalsCount > 0 ? String.Format("{0} наград", Model.MedalsCount) : string.Empty)</span></div>
+        @Html.Raw(Model.IsCouch ? "<h6 class='ev-help-info place'>работает тренером</h6>" : string.Empty)
+        <p>
+            <span>@Model.Description</span>
+
+        </p>
+        <table>
+            <tr>
+                <td>
+                    <div class="media team">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src="@Model.Team.Image" data-src="holder.js/64x64">
+                        </a>
+                        <div class="media-body title">
+                             @Html.ActionLink(Model.Team.Title, "TeamDetail", Model.Team.GetIdValue())
+                        </div>
+                    </div>
+
+                    @foreach (var member in Model.Team.Memebers)
+                    {
+                        if (member.Id != Model.Id)
+                        {
+                        <div class="media member">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="@member.Image" data-src="holder.js/64x64">
+                            </a>
+                            <div class="media-body">
+                                @Html.ActionLink(member.Title, "SportsmanDetail", member.GetIdValue())
+                                @Html.Raw(member.IsCouch ? "<div class='couch'>тренер</div>" : string.Empty)
+                            </div>
+                        </div>
+                        }
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

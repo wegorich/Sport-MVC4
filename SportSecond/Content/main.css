@@ -1,0 +1,110 @@
+﻿.ev-help-info, .couch {
+    color: #7E7E7E;
+    font-size: 11px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.couch {
+    margin: -6px 0 0 0;
+}
+
+.place {
+    color: #6C9471;
+    margin: 10px 0;
+}
+.red {
+     color:#d56e00;
+}
+
+.team {
+    padding: 10px;
+}
+
+    .team .title a {
+        color: #d56e00;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 38px;
+    }
+
+.age {
+    color: #999;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.sportsman img {
+    max-width: 120px;
+    max-height: 120px;
+    margin: auto;
+}
+
+.sportsman.detail img:first-child {
+    max-width: 240px;
+    max-height: 240px;
+}
+
+.team img.media-object {
+    max-width: 100px;
+    max-height: 100px;
+    margin: auto;
+}
+
+.member img.media-object {
+    max-width: 60px;
+    max-height: 60px;
+    margin: auto;
+}
+
+.ev-title {
+    font-size: 28px;
+}
+
+.ev {
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+    .ev table td {
+        vertical-align: text-top;
+    }
+
+.member {
+    padding: 0 20px;
+}
+
+.ev:first-child {
+    border-top: none;
+}
+
+.sportsman .pull-left {
+    width: 120px;
+    height: 120px;
+}
+
+.detail.sportsman .pull-left:first-child {
+    width: 240px;
+    height: 240px;
+}
+.member a.pull-left {
+    width: 60px;
+    height: 60px;
+}
+
+.team a.pull-left {
+    width: 100px;
+    height: 100px;
+}
+.team .pull-left.detail {
+    width: 200px;
+    height: 200px;
+}
+
+.team .detail img {
+    max-width: 200px;
+    max-height: 200px;
+}
+.team .sportsman {
+    padding: 20px 0 16px;
+}

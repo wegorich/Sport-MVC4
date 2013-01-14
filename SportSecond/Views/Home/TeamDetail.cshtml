@@ -1,0 +1,53 @@
+﻿@using SportSecond.BootstrapSupport
+@model SportSecond.Models.Team
+@{
+    ViewBag.Title = "Команда";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+<div class="media team">
+    <div class="media team">
+        <a class="pull-left detail" href="#">
+            <img class="media-object" src="@Model.Image" data-src="holder.js/64x64">
+        </a>
+        <div class="media-body">
+            <div class="media-heading ev-title">@Model.Title</div>
+            <table>
+                <tr>
+                    @foreach (var member in Model.Memebers.Take(6))
+                    {
+                        <td>
+
+                            <div class="media sportsman">
+                                <a class="pull-left" href="#">
+                                    <img class="media-object" src="@member.Image" data-src="holder.js/64x64">
+                                </a>
+                                <div class="media-body">
+                                    @Html.ActionLink(member.Title, "SportsmanDetail", member.GetIdValue())
+                                    @Html.Raw(member.IsCouch ? "<div class='couch'>тренер</div>" : string.Empty)
+                                </div>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            </table>
+            
+    <h4 class="red">События команды</h4>
+    <table>
+        <tr>
+            <td>
+                @foreach (var ev in Model.Events)
+                {
+                    <div class="media team">
+                        <div class="media-body">
+                            @Html.ActionLink(ev.Title, "EventDetail", ev.GetIdValue())
+                            <div class="ev-help-info">@(DateTime.Now > ev.Date ? String.Format("{0} - мероприятие уже прошло", ev.Date.ToShortDateString()) : ev.Date.ToShortDateString())</div>
+                        </div>
+                    </div>
+                }
+            </td>
+        </tr>
+    </table>
+        </div>
+    </div>
+</div>
+

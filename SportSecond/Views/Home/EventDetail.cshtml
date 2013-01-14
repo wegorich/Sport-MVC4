@@ -1,0 +1,49 @@
+﻿@using System.Web.Mvc.Html
+@using SportSecond.BootstrapSupport
+@model SportSecond.Models.Event
+@{
+    ViewBag.Title = "Детали события";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+
+<div class="ev">
+    <div class="ev-help-info">@(DateTime.Now>Model.Date?String.Format("{0} - мероприятие уже прошло",Model.Date.ToShortDateString()):Model.Date.ToShortDateString())</div>
+    <div class="ev-title">
+        @Model.Title
+    </div>
+    <h6 class="ev-help-info place">@Model.Location.Country.Title - @Model.Location.Title</h6>
+    <div>
+        @Model.Description
+    </div>
+
+    <table>
+        <tr>
+            @foreach (var item in Model.Teams)
+            {
+                <td>
+                    <div class="media team">
+                        <a class="pull-left" href="#">
+                            <img class="media-object" src="@item.Image" data-src="holder.js/64x64">
+                        </a>
+                        <div class="media-body title">
+                            @Html.ActionLink(item.Title, "TeamDetail", item.GetIdValue())
+                        </div>
+                    </div>
+ 
+                    @foreach (var member in item.Memebers)
+                    {
+                        <div class="media member">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="@member.Image" data-src="holder.js/64x64">
+                            </a>
+                            <div class="media-body">
+                                @Html.ActionLink(member.Title,"SportsmanDetail",member.GetIdValue())
+                                @Html.Raw(member.IsCouch?"<div class='couch'>тренер</div>":string.Empty)
+                            </div>
+                        </div>
+                    }
+                </td>
+            }
+        </tr>
+    </table>
+</div>

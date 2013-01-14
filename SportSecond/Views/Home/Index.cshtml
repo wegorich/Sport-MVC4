@@ -1,0 +1,45 @@
+﻿@using System.Web.Mvc.Html
+@using SportSecond.BootstrapSupport
+@model ICollection<SportSecond.Models.Event>
+@{
+    ViewBag.Title = "Главная";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+@using (Html.BeginForm("EventSearch", "Home", FormMethod.Post, new { @class = "form-search" }))
+{
+    <input type="text" placeholder="введите что нибудь для начала..." name="search" class="input-large search-query">
+    <button type="submit" class="btn">Искать</button>
+}
+
+@foreach (var item in Model)
+{
+    <div class="ev">
+        <div class="ev-help-info">@(DateTime.Now > item.Date ? 
+        String.Format("{0} - мероприятие уже прошло", item.Date.ToShortDateString()) : 
+        item.Date.ToShortDateString())</div>
+        <div class="ev-title">
+            @Html.ActionLink(item.Title, "EventDetail", item.GetIdValue())
+        </div>
+        <h6 class="ev-help-info place">@item.Location.Country.Title - @item.Location.Title</h6>
+        <div>
+            @(item.Description.Length > 300 ? item.Description.Substring(0, 300) : item.Description)
+        </div>
+        <table>
+            <tr>
+                @foreach (var team in item.Teams.Take(6))
+                {
+                    <td>
+                        <div class="media team">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="@team.Image" data-src="holder.js/64x64">
+                            </a>
+                            <div class="media-body title">
+                                @Html.ActionLink(team.Title, "TeamDetail", team.GetIdValue())
+                            </div>
+                        </div>
+                    </td>
+                }
+            </tr>
+        </table>
+    </div>
+}

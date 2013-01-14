@@ -1,0 +1,41 @@
+﻿@using SportSecond.BootstrapSupport
+@model ICollection<SportSecond.Models.Team>
+@{
+    ViewBag.Title = "Команды";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+@using (Html.BeginForm("TeamsSearch","Home",FormMethod.Post,new {@class="form-search"}))
+{
+  <input type="text" placeholder="введите что нибудь для начала..." name="search" class="input-large search-query">
+  <button type="submit" class="btn">Искать</button>
+}
+
+@foreach (var item in Model)
+{
+    <div class="media team">
+        <a class="pull-left" href="#">
+            <img class="media-object" src="@item.Image" data-src="holder.js/64x64">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">@Html.ActionLink(@item.Title,"TeamDetail",@item.GetIdValue()) <span class="age">в команде @item.Memebers.Count человек</span></h4>
+            <table>
+            <tr>
+                @foreach (var member in item.Memebers.Take(6))
+                {
+                    <td>
+                       <div class="media member">
+                            <a class="pull-left" href="#">
+                                <img class="media-object" src="@member.Image" data-src="holder.js/64x64">
+                            </a>
+                            <div class="media-body">
+                                @Html.ActionLink(member.Title,"SportsmanDetail",member.GetIdValue())
+                                @Html.Raw(member.IsCouch?"<div class='couch'>тренер</div>":string.Empty)
+                            </div>
+                        </div>
+                    </td>
+                }
+            </tr>
+        </table>
+        </div>
+    </div>
+}

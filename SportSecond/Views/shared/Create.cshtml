@@ -1,0 +1,54 @@
+@using System.Collections
+@using System.Reflection
+@using BootstrapSupport
+@using SportSecond.BootstrapSupport
+@using SportSecond.Models
+@model Object
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset class="form-horizontal">
+        <legend>
+            @Model.GetLabel()
+            <small>Детали</small>
+        </legend>
+        @foreach (PropertyInfo property in Model.VisibleProperties())
+        {
+            object value = property.GetValue(Model);
+
+            @Html.BeginControlGroupFor(property.Name)
+            @Html.Label(property.Name, new { @class = "control-label" })
+            <div class="controls">
+                @if (ViewData[property.Name] as IEnumerable == null)
+                {
+                    if (ViewData[property.Name + "multiple"] as IEnumerable == null)
+                    {
+                    @Html.Editor(property.Name, new { @class = "input-xlarge" })
+                    @Html.ValidationMessage(property.Name, null, new { @class = "help-inline" })
+                    }
+                    else
+                    {
+                        var list = new List<ISelectListable>((IEnumerable<ISelectListable>)ViewData[property.Name + "multiple"]);
+                        if (value != null)
+                        {
+                            list.AddRange((IEnumerable<ISelectListable>) value);
+                        }
+                        @(value != null ? 
+                        Html.ListBox(property.Name+"m", new MultiSelectList(list, "Id", "Title", ((IEnumerable<ISelectListable>) value).Select(x=>x.Id))) : 
+                        Html.ListBox(property.Name+"m", new MultiSelectList(list, "Id", "Title")))
+                    }
+                }
+
+                else
+                {
+                    @Html.DropDownList(property.Name, new MultiSelectList((IEnumerable<ISelectListable>)ViewData[property.Name], "Id", "Title"))
+                }
+            </div>
+            @Html.EndControlGroup()
+        }
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            @Html.ActionLink("Назад", "Index", null, new { @class = "btn " })
+        </div>
+    </fieldset>
+}

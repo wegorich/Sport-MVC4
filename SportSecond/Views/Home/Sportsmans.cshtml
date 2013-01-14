@@ -1,0 +1,29 @@
+﻿@using System.Web.Mvc.Html
+@using SportSecond.BootstrapSupport
+@model ICollection<SportSecond.Models.Sportsman>
+@{
+    ViewBag.Title = "Спортсмены";
+    Layout = "~/Views/shared/_BootstrapLayout.basic.cshtml";
+}
+@using (Html.BeginForm("SportsmansSearch","Home",FormMethod.Post,new {@class="form-search"}))
+{
+  <input type="text" placeholder="введите что нибудь для начала..." name="search" class="input-large search-query">
+  <button type="submit" class="btn">Искать</button>
+}
+
+@foreach (var item in Model)
+{
+    <div class="media sportsman">
+        <a class="pull-left">
+            <img class="media-object" src="@item.Image" data-src="holder.js/64x64">
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">@Html.ActionLink(@item.Title,"SportsmanDetail",@item.GetIdValue()) <span class="age">возраст @(DateTime.Now.Year - item.Birthday.Year)</span></h4>
+            <div class="ev-help-info"><span>@item.Sport.Title</span>, <span>@(item.Gender ? "муж." : "жен.")</span>, <span>@item.Nationality.Title</span>, <span>@(item.MedalsCount > 0 ? String.Format("{0} наград", item.MedalsCount) : string.Empty)</span></div>
+            <p>
+                <span>@(item.Description.Length > 150 ? item.Description.Substring(0, 150) : item.Description)</span>
+                @Html.Raw(item.IsCouch ? "<h6 class='ev-help-info place'>работает тренером</h6>" : string.Empty)
+            </p>
+        </div>
+    </div>
+}
